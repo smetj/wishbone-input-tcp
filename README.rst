@@ -1,3 +1,5 @@
+::
+
               __       __    __
     .--.--.--|__.-----|  |--|  |--.-----.-----.-----.
     |  |  |  |  |__ --|     |  _  |  _  |     |  -__|
@@ -11,7 +13,7 @@
     wishbone.input.tcp
     ==================
 
-    Version: 0.1.0
+    Version: 1.0.0
 
     Receive data over a TCP socket.
     -------------------------------
@@ -62,5 +64,3 @@
         and stream data.
 
         Choosing "\n" as a delimiter, which is the default, each new line is a new event.
-
-
