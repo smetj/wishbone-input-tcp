@@ -115,8 +115,8 @@ class TCPIn(Actor):
     def __handleNoDelimiter(self, sock, address):
         sfile = sock.makefile()
         chunk = sfile.readlines()
-        event = self.createEvent()
-        event.data = ''.join(chunk)
+        event = Event(''.join(chunk))
+        event.set("@tmp.%s.client_ip" % (self.name), str(address[0]))
         self.submit(event, self.pool.queue.outbox)
         sfile.close()
         sock.close()
@@ -137,6 +137,7 @@ class TCPIn(Actor):
                 break
             else:
                 event = Event(chunk.rstrip('\r\n'))
+                event.set("@tmp.%s.client_ip" % (self.name), str(address[0]))
                 self.submit(event, self.pool.queue.outbox)
 
     def __handleDelimiter(self, sock, address):
@@ -158,6 +159,7 @@ class TCPIn(Actor):
                 if chunk != '':
                     data.append(chunk)
                     event = Event(''.join(data))
+                    event.set("@tmp.%s.client_ip" % (self.name), str(address[0]))
                     self.submit(event, self.pool.queue.outbox)
                     data = []
             else:
