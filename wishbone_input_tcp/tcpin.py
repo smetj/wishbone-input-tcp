@@ -137,8 +137,11 @@ class TCPIn(Actor):
                 break
             else:
                 event = Event(chunk.rstrip('\r\n'))
-                event.set("@tmp.%s.client_ip" % (self.name), str(address[0]))
+                event.set(str(address[0]), "@tmp.%s.client_ip" % (self.name))
                 self.submit(event, self.pool.queue.outbox)
+
+        sfile.close()
+        sock.close()
 
     def __handleDelimiter(self, sock, address):
         self.logging.debug("Connection from %s." % (str(address[0])))
